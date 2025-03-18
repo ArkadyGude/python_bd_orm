@@ -32,10 +32,11 @@ for record in data:
 
 session.commit()
 
-pub = input()
+# pub = input()
+pub = 'O’Reilly'
 
-"Вывести Название, магазин, стоимость покупки, дата по названию издательства."
+selected = session.query(Book.title, Shop.name, Sale.price, Sale.date_sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(Publisher.name.like(pub))
+k = [[s[0]] + [s[1]] + [str(s[2])] + [str(s[3])] for s in selected.all()]
 
-# publisher = session.query(Publisher).filter(Publisher.name == x).all()
-# sales = session.query(Sale).all()
-# shops = session.query(Shop).all()
+for i in k:
+    print(*i, sep='\t|\t ')
